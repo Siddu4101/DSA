@@ -1,4 +1,4 @@
-package org.example.dsa.questions;
+package org.example.dsa.loopsandcondition;
 
 import java.util.Scanner;
 
