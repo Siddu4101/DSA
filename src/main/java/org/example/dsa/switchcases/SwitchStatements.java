@@ -4,8 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Scanner;
 
+import static org.example.dsa.switchcases.SwitchStatements.Levels.*;
+
 @Slf4j
 public class SwitchStatements {
+    private static final String FIRST_MSG = "This is first";
+    private static final String SECOND_MSG = "This is second";
+    private static final String THIRD_MSG = "This is third";
+    private static final String OUT_OF_LEVEL_MSG = "This is out of level it should be within 1-3";
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -20,24 +26,45 @@ public class SwitchStatements {
         /*normal switch case*/
         switch (x) {
             case 1:
-                log.info("This is first");
+                log.info(FIRST_MSG);
                 break;
             case 2:
-                log.info("This is second");
+                log.info(SECOND_MSG);
                 break;
             case 3:
-                log.info("This is third");
+                log.info(THIRD_MSG);
                 break;
             default:
-                log.info("This is out of level it should be within 1-3");
+                log.info(OUT_OF_LEVEL_MSG);
         }
 
         /*enhanced switch statements*/
         switch (x) {
-            case 1 -> log.info("This is first");
-            case 2 -> log.info("This is second");
-            case 3 -> log.info("This is third");
-            default -> log.info("This is out of level it should be within 1-3");
+            case 1 -> log.info(FIRST_MSG);
+            case 2 -> log.info(SECOND_MSG);
+            case 3 -> log.info(THIRD_MSG);
+            default -> log.info(OUT_OF_LEVEL_MSG);
+        }
+
+        /*Switch with enum*/
+        Levels level = Levels.valueOf(scanner.next());
+        switch (level) {
+            case ONE -> log.info(ONE.value);
+            case TWO -> log.info(TWO.value);
+            case THREE -> log.info(THREE.value);
+            default -> log.info(OUT_OF_LEVEL_MSG);
+        }
+    }
+
+    enum Levels {
+        ONE(FIRST_MSG),
+        TWO(SECOND_MSG),
+        THREE(THIRD_MSG);
+
+        final String value;
+
+        Levels(String value) {
+            this.value = value;
         }
     }
 }
