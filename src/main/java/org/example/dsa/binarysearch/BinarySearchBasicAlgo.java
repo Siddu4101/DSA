@@ -75,3 +75,32 @@ public class BinarySearchBasicAlgo {
         return false;
     }
 }
+
+class Test {
+    public static int findPeak(int[] nums) {
+        int left = 0;
+        int right = nums.length - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            boolean isLeftSmaller = (mid == 0 || nums[mid] >= nums[mid - 1]);
+            boolean isRightSmaller = (mid == nums.length - 1 || nums[mid] >= nums[mid + 1]);
+
+            if (isLeftSmaller && isRightSmaller) {
+                return nums[mid]; // Found peak
+            } else if (mid > 0 && nums[mid - 1] > nums[mid]) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+
+        return -1; // fallback (shouldn't reach here if array has at least one peak)
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {2, 9, 2, 2, 2};
+        System.out.println("Peak: " + findPeak(nums)); // Output: 9
+    }
+}
