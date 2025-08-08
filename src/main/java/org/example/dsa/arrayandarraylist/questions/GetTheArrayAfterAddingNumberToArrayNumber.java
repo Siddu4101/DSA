@@ -35,6 +35,9 @@ public class GetTheArrayAfterAddingNumberToArrayNumber {
 
         /*
          * Approach 1
+         * concat the array digits
+         * cast to BigInt then add the k
+         * now iterate over char and add it to the list
          * */
         ArrayList<Integer> res = new ArrayList<>();
         StringBuilder arrayNumber = new StringBuilder();
@@ -43,6 +46,29 @@ public class GetTheArrayAfterAddingNumberToArrayNumber {
         BigInteger arraySumPlusKey = new BigInteger(arrayNumber.toString()).add(new BigInteger(String.valueOf(k)));
         for (char i : String.valueOf(arraySumPlusKey).toCharArray())
             res.add(Integer.valueOf(String.valueOf(i)));
+
+        /*
+         * Approach 2
+         * do the simple addition which we do on a notebook
+         * between array digits from right to left with k
+         * and every time k last element will be removed and added for next digit with remaining part
+         * Sol : https://leetcode.com/problems/add-to-array-form-of-integer/solutions/234456/add-to-array-form-of-integer/
+         *   int N = A.length;
+             int cur = K;
+             List<Integer> ans = new ArrayList();
+
+             int i = N;
+             while (--i >= 0 || cur > 0) {
+                 if (i >= 0)
+                     cur += A[i];
+                 ans.add(cur % 10);
+                 cur /= 10;
+             }
+
+             Collections.reverse(ans);
+             return ans;
+         * */
+
         return res;
     }
 }
