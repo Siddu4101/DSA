@@ -2,6 +2,7 @@ package org.example.dsa.arrayandarraylist.questions;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,11 +28,69 @@ public class SpiralMatrix {
         */
 
     public static void main(String[] args) {
-        int[][] matrix = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 16}, {17, 18, 19, 20}, {21, 22, 23, 24}};
-        /*NOTE: Failed approach for 3rd example need to try some other approach.*/
-        log.info("printing spiral traversed matrix {}", spiralOrder(matrix));
+        int[][] matrix = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}};
+        log.info("printing spiral traversed matrix {}", printSpiralMatrix(matrix));
     }
 
+    /*=================Second approach completely working=================================*/
+    private static List<Integer> printSpiralMatrix(int[][] matrix) {
+        /*to get the row and col count*/
+        int rc = matrix.length;
+        int cc = matrix[0].length;
+        int totalElements = rc * cc;
+        /*to maintain the boundary from start and end row and col after each layer*/
+        int rs = 0;
+        int cs = 0;
+        int re = rc;
+        int ce = cc;
+
+        List<Integer> result = new ArrayList<>();
+
+        for (int i = 0; i < Math.ceilDiv(rc, 2); i++) {
+            int ri = rs;
+            int ci = cs;
+
+            /*to get the left to right row*/
+            while (ci < ce && checkResultSize(result, totalElements)) {
+                result.add(matrix[ri][ci++]);
+            }
+            ci--;/*to keep the pointer on the last col*/
+            ri++;/*to move to the next row*/
+
+            /*to get the top to bottom col*/
+            while (ri < re && checkResultSize(result, totalElements)) {
+                result.add(matrix[ri++][ci]);
+            }
+            ri--;
+            ci--;
+
+            /*to get the right to left row*/
+            while (ci >= cs && checkResultSize(result, totalElements)) {
+                result.add(matrix[ri][ci--]);
+            }
+            ci++;
+            ri--;
+
+            /*to get the bottom to top col*/
+            while (ri > rs && checkResultSize(result, totalElements)) {
+                result.add(matrix[ri--][ci]);
+            }
+
+            /*to shrink the row and col boundary by one layer*/
+            rs += 1;
+            cs += 1;
+            re -= 1;
+            ce -= 1;
+        }
+        return result;
+    }
+
+    private static boolean checkResultSize(List<Integer> result, int totalElements) {
+        return result.size() < totalElements;
+    }
+
+
+    /*==========================First approach which has some issue so refer the above approach which is better one========================*/
     private static List<Integer> spiralOrder(int[][] matrix) {
         /*for r row array we need to perform r-1 times revert and shuffle*/
         for (int i = 0; i < matrix.length - 1; i++)
@@ -76,4 +135,5 @@ public class SpiralMatrix {
             System.out.print("]\n");
         }
     }
+
 }
