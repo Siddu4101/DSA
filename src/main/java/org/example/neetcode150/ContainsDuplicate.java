@@ -32,7 +32,7 @@ public class ContainsDuplicate {
         log.info("contains duplicate ? via streams and group by {}", viaStreamsAndGruopBy(nums));
 
         log.info("contains duplicate ? via count and distinct count {}", viaCountAndDistinctCount(nums));
-        log.info("contains duplicate ? via hash set contains method {}", viaHasSetContainsMethod(nums));
+        log.info("contains duplicate ? via hash set contains method {}", viaHasSet(nums));
     }
 
     private static boolean viaCountAndDistinctCount(int[] nums) {
@@ -47,14 +47,12 @@ public class ContainsDuplicate {
         return collect.values().stream().anyMatch(x -> x > 1);
     }
 
-    public static boolean viaHasSetContainsMethod(int[] nums) {
+    public static boolean viaHasSet(int[] nums) {
         /*3. we can use the HashSet were we will keep the elements if the element already present before keeping it then return ture as it's duplicate*/
         HashSet<Integer> integers = new HashSet<>();
         for (int num : nums) {
-            if (integers.contains(num)) /*This will be constant time lookup  o(1)*/
+            if (!integers.add(num)) /*returns false if element already present*/
                 return true;
-            else
-                integers.add(num);
         }
         return false;
     }
