@@ -4,10 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.mapping;
-import static java.util.stream.Collectors.toList;
 
 @Slf4j
 public class GroupAnagrams {
@@ -26,15 +22,30 @@ public class GroupAnagrams {
      * */
     public static void main(String[] args) {
         String[] strs =
+//                {"c", "c"};
 //                {"", ""};
-                {"eat", "tea", "tan", "ate", "nat", "bat"};
+                {"eat", "tea", "tan", "ate", "nat", "bat",};
 
         /*This method fails when there are duplicates as i am using map with error of duplicate key*/
         /*{"c", "c"}*/
-        log.info("The grouped anagrams are {}", groupAnagrams(strs));
+        log.info("The grouped anagrams are from Map {}", groupAnagrams(strs));
 
         /*so trying with 2D Array*/
-        log.info("The grouped anagrams are {}", groupAnagramsArrays(strs));
+        log.info("The grouped anagrams are from array {}", groupAnagramsArrays(strs));
+
+        /*via hashmap with better way computeIfAbsent*/
+        log.info("The grouped anagrams are form map with computeIfAbsent {}", groupAnagramsMapComputeIfAbsent(strs));
+    }
+
+    /*simplest and best way*/
+    private static List<List<String>> groupAnagramsMapComputeIfAbsent(String[] strs) {
+        HashMap<String, List<String>> subList = new HashMap<>();
+        for (String s : strs) {
+            char[] charArray = s.toCharArray();
+            Arrays.sort(charArray);
+            subList.computeIfAbsent(new String(charArray), v -> new ArrayList<>()).add(s);
+        }
+        return new ArrayList<>(subList.values());
     }
 
     public static List<List<String>> groupAnagrams(String[] strs) {
@@ -67,8 +78,14 @@ public class GroupAnagrams {
             arrayWithIndex[i][1] = new String(charArray);
         }
         Map<String, List<String[]>> collect = Arrays.stream(arrayWithIndex).collect(Collectors.groupingBy(x -> x[1]));
-        System.out.println("Result");
-//        collect.values().stream().forEach(x -> Arrays.deepToString());
-        return null;
+
+        List<List<String>> result = new ArrayList<>();
+        collect.values().forEach(x -> {
+            ArrayList<String> subList = new ArrayList<>();
+            for (String[] strings : x)
+                subList.add(strings[0]);
+            result.add(subList);
+        });
+        return result;
     }
 }
