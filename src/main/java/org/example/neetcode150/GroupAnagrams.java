@@ -33,7 +33,7 @@ public class GroupAnagrams {
         /*so trying with 2D Array*/
         log.info("The grouped anagrams are from array {}", groupAnagramsArrays(strs));
 
-        /*via hashmap with better way computeIfAbsent*/
+        /*via hashmap internal functions*/
         log.info("The grouped anagrams are form map with computeIfAbsent {}", groupAnagramsMapComputeIfAbsent(strs));
     }
 
@@ -43,7 +43,11 @@ public class GroupAnagrams {
         for (String s : strs) {
             char[] charArray = s.toCharArray();
             Arrays.sort(charArray);
-            subList.computeIfAbsent(new String(charArray), v -> new ArrayList<>()).add(s);
+            /*there are 2 ways u can put the value (in both case if we set or return the lambda as null it removes the entry*/
+            /*1. computIfAbsent : check for the key if already present returns the value if not creates the entry with lambda(2nd arg as value) and returns value*/
+            subList.computeIfAbsent(new String(charArray), k -> new ArrayList<>()).add(s);
+            /*2. compute: which runs the lambda always and if the key not present it creates and returns the value if already exist it gets and helps for the update or delete*/
+//            subList.compute(new String(charArray), (k, v) -> v == null ? new ArrayList<>() : v).add(s);
         }
         return new ArrayList<>(subList.values());
     }
@@ -87,5 +91,22 @@ public class GroupAnagrams {
             result.add(subList);
         });
         return result;
+    }
+
+
+    public static List<List<String>> groupAnagramsWithHasMapMethod(String[] strs) {
+        HashMap<String, List<String>> anagramCountMap = new HashMap<>();
+        for (String str : strs) {
+            char[] charArray = str.toCharArray();
+            Arrays.sort(charArray);
+            String sortedKey = new String(charArray);
+            /*there are 2 ways u can put the value (in both case if we set or return the lambda as null it removes the entry*/
+            /*1. computIfAbsent : check for the key if already present returns the value if not creates the entry with lambda(2nd arg as value) and returns value*/
+            anagramCountMap.computeIfAbsent(sortedKey, key -> new ArrayList<>()).add(str);
+
+            /*2. compute: which runs the lambda always and if the key not present it creates and returns the value if already exist it gets and helps for the update or delete*/
+//            anagramCountMap.compute(sortedKey, (k,v)-> v == null ? new ArrayList<String>() : v).add(str);
+        }
+        return anagramCountMap.values().stream().toList();
     }
 }
