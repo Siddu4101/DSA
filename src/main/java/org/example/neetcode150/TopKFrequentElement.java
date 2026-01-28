@@ -26,10 +26,11 @@ public class TopKFrequentElement {
         Output: [1]
      * */
     public static void main(String[] args) {
-        int[] nums = {1, 1, 1, 2, 2, 3};
-        int k = 2;
+        int[] nums = {1};//, 1, 1, 2, 2, 3};
+        int k = 1;
         log.info("The top {} frequent numbers are {}", k, Arrays.toString(topKFrequent(nums, k)));
         log.info("Top K elements via heap {}", Arrays.toString(topKUsingHeap(nums, k)));
+        log.info("Top K elements via bucket sort {}", Arrays.toString(topKUsingBucketSort(nums, k)));
     }
 
     public static int[] topKFrequent(int[] nums, int k) {
@@ -59,6 +60,33 @@ public class TopKFrequentElement {
         int[] res = new int[k];
         for (int i = 0; i < k; i++)
             res[i] = topKElements.poll()[1];
+        return res;
+    }
+
+    public static int[] topKUsingBucketSort(int[] nums, int k) {
+        /*create possible max frequency buckets*/
+        List<Integer>[] buckets = new List[nums.length + 1]; /*+1 because we can have max frequency of length of nums but index starts from 0 so need extra 1 to balance*/
+        /*initialize the buckets*/
+        for (int i = 0; i < buckets.length; i++)
+            buckets[i] = new ArrayList<>();
+
+        /*create frequency map*/
+        HashMap<Integer, Integer> frequencyMap = new HashMap<>();
+        for (int num : nums)
+            frequencyMap.put(num, frequencyMap.getOrDefault(num, 0) + 1);
+
+        /*add the elements to the bucket based ont the frequency*/
+        for (Map.Entry<Integer, Integer> entry : frequencyMap.entrySet())
+            buckets[entry.getValue()].add(entry.getKey());
+
+        /*now bucket will have entries index 0-num.length frequency elements list so do the reverse search for the top k frequent elements*/
+        int[] res = new int[k];
+        int res_idx = 0;
+        for (int i = buckets.length - 1; i >= 0 && res_idx < k; i--) {
+            for (int num : buckets[i]) {
+                res[res_idx++] = num;
+            }
+        }
         return res;
     }
 }
