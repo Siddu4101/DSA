@@ -60,11 +60,13 @@ public class EncodeAndDecodeMessage {
         log.info("Decoded data is {}", decode(encode));
     }
 
+    /*Approach 1*/
+    /*here we are using the non-ascii char é as a delimiter for encode and decode*/
     public static String encode(List<String> strs) {
-        return String.join("|", strs);
+        return String.join("é", strs);
     }
 
     public static List<String> decode(String str) {
-        return Arrays.stream(str.split("\\|")).toList();
+        return Arrays.stream(str.split("\\é")).toList();
     }
 }
