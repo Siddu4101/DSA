@@ -2,8 +2,7 @@ package org.example.neetcode150;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 public class SudokuValidator {
@@ -35,27 +34,28 @@ public class SudokuValidator {
 
     public static void main(String[] args) {
         char[][] board =
-                {{'.', '.', '.', '.', '5', '.', '.', '1', '.'}
-                        , {'.', '4', '.', '3', '.', '.', '.', '.', '.'}
-                        , {'.', '.', '.', '.', '.', '3', '.', '.', '1'}
-                        , {'8', '.', '.', '.', '.', '.', '.', '2', '.'}
-                        , {'.', '.', '2', '.', '7', '.', '.', '.', '.'}
-                        , {'.', '1', '5', '.', '.', '.', '.', '.', '.'}
-                        , {'.', '.', '.', '.', '.', '2', '.', '.', '.'}
-                        , {'.', '2', '.', '9', '.', '.', '.', '.', '.'}
-                        , {'.', '.', '4', '.', '.', '.', '.', '.', '.'}};//==>False
+//                {{'.', '.', '.', '.', '5', '.', '.', '1', '.'}
+//                        , {'.', '4', '.', '3', '.', '.', '.', '.', '.'}
+//                        , {'.', '.', '.', '.', '.', '3', '.', '.', '1'}
+//                        , {'8', '.', '.', '.', '.', '.', '.', '2', '.'}
+//                        , {'.', '.', '2', '.', '7', '.', '.', '.', '.'}
+//                        , {'.', '1', '5', '.', '.', '.', '.', '.', '.'}
+//                        , {'.', '.', '.', '.', '.', '2', '.', '.', '.'}
+//                        , {'.', '2', '.', '9', '.', '.', '.', '.', '.'}
+//                        , {'.', '.', '4', '.', '.', '.', '.', '.', '.'}};//==>False
 
-//                {{'5', '3', '.', '.', '7', '.', '.', '.', '.'},
-//                {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
-//                {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
-//                {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
-//                {'4', '.', '.', '8', '.', '3', '.', '.', '1'},
-//                {'7', '.', '.', '.', '2', '.', '.', '.', '6'},
-//                {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
-//                {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
-//                {'.', '.', '.', '.', '8', '.', '.', '7', '9'}};  ==> True
+                {{'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+                        {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+                        {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+                        {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+                        {'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+                        {'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+                        {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+                        {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+                        {'.', '.', '.', '.', '8', '.', '.', '7', '9'}};//  ==> True
 
         log.info("The given sudoku is {}", isValidSudokuBrutForce(board));
+        log.info("The given sudoku via hashSet {}", isValidSudokuViaSet(board));
     }
 
     /*Approach 1
@@ -72,11 +72,9 @@ public class SudokuValidator {
         /*Validate the column and row numbers*/
         for (int i = 0; i < board[0].length; i++) {
             for (int j = 0; j < board[1].length; j++) {
-                if ((board[i][j] >= '1' && board[i][j] <= '9') || board[i][j] == '.') {
+                if (board[i][j] != '.') {
                     rfrequency.put(board[i][j], rfrequency.getOrDefault(board[i][j], 0) + 1);
                     cfrequency.put(board[j][i], cfrequency.getOrDefault(board[j][i], 0) + 1);
-                } else {
-                    return false;
                 }
             }
             if (checkForDuplicates(rfrequency) || checkForDuplicates(cfrequency))
@@ -117,4 +115,44 @@ public class SudokuValidator {
         return checkForDuplicates(squareFrequency);
     }
 
+
+    /*With better timing from 7ms to 2ms*/
+    /*Approach 2:*/
+    /*Using Set to check the duplicates and perform the similar checks as above */
+    public static boolean isValidSudokuViaSet(char[][] board) {
+        /*check the row and col number within the 1-9 or */
+        Set<Character> rfrequency = new HashSet<>();
+        Set<Character> cfrequency = new HashSet<>();
+
+        /*Validate the column and row duplicates*/
+        for (int i = 0; i < board[0].length; i++) {
+            for (int j = 0; j < board[1].length; j++) {
+                if ((board[i][j] != '.' && !rfrequency.add(board[i][j])) || (board[j][i] != '.' && !cfrequency.add(board[j][i])))
+                    return false;
+            }
+            rfrequency.clear();
+            cfrequency.clear();
+        }
+
+        /*Check for the 3X3 for duplicates*/
+        for (int i = 0; i < 7; i += 3) {
+            for (int j = 0; j < 7; j += 3) {
+                if (check3x3DuplicatesViaSet(board, i, j))
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    /*check for 3x3 duplicates*/
+    private static boolean check3x3DuplicatesViaSet(char[][] board, int ri, int ci) {
+        Set<Character> frequency = new HashSet<>();
+        for (int i = ri; i < ri + 3; i++) {
+            for (int j = ci; j < ci + 3; j++) {
+                if ((board[i][j] != '.' && !frequency.add(board[i][j])))
+                    return true;
+            }
+        }
+        return false;
+    }
 }
