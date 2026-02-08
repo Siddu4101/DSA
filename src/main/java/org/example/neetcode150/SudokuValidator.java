@@ -56,6 +56,7 @@ public class SudokuValidator {
 
         log.info("The given sudoku is {}", isValidSudokuBrutForce(board));
         log.info("The given sudoku via hashSet {}", isValidSudokuViaSet(board));
+        log.info("The given sudoku via BitMasking {}", isValidSudokuViaBitMasking(board));
     }
 
     /*Approach 1
@@ -154,5 +155,36 @@ public class SudokuValidator {
             }
         }
         return false;
+    }
+
+    /*Approach : 03 */
+    /*We can follow bit masking approach too which will helps to use a each array for a the row col and 3x3
+    which will maintain the flag for each number 1-9 as 0-8 bits and whenever we see a number flag it in this array
+    anything repeats(multiply with array) we can mark it as false else set that flag and continue*/
+
+    private static boolean isValidSudokuViaBitMasking(char[][] board) {
+        int[] rowMask = new int[9];
+        int[] colMask = new int[9];
+
+        for (int r = 0; r < 9; r++) {
+            for (int c = 0; c < 9; c++) {
+                if (board[r][c] == '.')
+                    continue;
+                /*get the val from r,c and sub 1 bcz we are using masking of 8 bit*/
+                int num = board[r][c] - '1';/*-1 to align with 8 bit masking*/
+                if ((rowMask[r] & (1 << num)) > 0 || (colMask[c] & (1 << num)) > 0)
+                    return false;
+                rowMask[r] |= (1 << num);
+                colMask[c] |= (1 << num);
+            }
+        }
+        /*for 3x3 we can try the bit mask also*/
+        for (int i = 0; i < 7; i += 3) {
+            for (int j = 0; j < 7; j += 3) {
+                if (check3x3DuplicatesViaSet(board, i, j))
+                    return false;
+            }
+        }
+        return true;
     }
 }
