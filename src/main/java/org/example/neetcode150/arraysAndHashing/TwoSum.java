@@ -1,4 +1,4 @@
-package org.example.neetcode150;
+package org.example.neetcode150.arraysAndHashing;
 
 import lombok.extern.slf4j.Slf4j;
 
