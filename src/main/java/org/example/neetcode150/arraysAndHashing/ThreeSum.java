@@ -25,8 +25,63 @@ public class ThreeSum {
      * */
 
     public static void main(String[] args) {
-        int[] nums = {-1, 0, 1, 2, -1, -4};
+        int[] nums =
+//                {0, 0, 0};
+                {-1, 0, 1, 2, -1, -4};
         log.info("The 3 sum list can be {}", threeSum(nums));
+        log.info("The 3 sum list can be {} via 3 pointer method", threeSumViaThreePointerMethod(nums));
+    }
+
+    /*WORKING SOLUTION*/
+    private static List<List<Integer>> threeSumViaThreePointerMethod(int[] nums) {
+        /*Approach:
+         * 1. sort the nums to use this 3 pointer approach
+         * 2. set a pointer at the starting i = 0 and next 2 pointer at j = i + 1 and k = length - 1
+         * 3. now try to check for the sum = nums[i] + nums[j] + nums[k] == 0 if yes just add it in the result and break that iteration
+         * 4. if sum < 0 while nums[j] == nums[j+1] increment the j and after loop also increment by 1 so that we can avoid the duplicates pair of 3 in the result
+         * 5. if sum > 0 while nums[k] == nums[k-1] decrement the k and after loop also decrement by 1 so that we can avoid the duplicates pair of 3 in the result
+         * 6. these increment and decrement of j and k should happen when it satisfies the j < k
+         * 7. while nums[i] == nums[i+1] and i < k increment the i and after loop also decrement by 1 so that we can avoid the duplicates pair of 3 in the result
+         * 8. and exit the program once you find nums[i] > 0 because after that u will find all the numbers as 0 or > 0 so sum can't be 0 anymore for any addition
+         * */
+        int length = nums.length;
+        List<List<Integer>> result = new ArrayList<>();
+
+        /*initialize the pointers*/
+        int i = 0;
+        int j = i + 1;
+        int k = length - 1;
+
+        /*sort the nums array*/
+        Arrays.sort(nums);
+        while (nums[i] <= 0) { /*if start is > 0 next number >0 so it's sum can never be 0*/
+            while (j < k) {
+                int sum = nums[i] + nums[j] + nums[k];
+                if (sum == 0) {
+                    result.add(List.of(nums[i], nums[j], nums[k]));
+                    while (j < k && nums[j] == nums[j + 1]) /* This j decrement is to get all the possible pair for that iteration of the i*/
+                        j++;
+                    j++;
+                } else if (sum < 0) {
+                    while (j < k && nums[j] == nums[j + 1]) /*to avoid the duplicates*/
+                        j++;
+                    j++; /*just next to duplicate */
+                } else {
+                    while (j < k && nums[k] == nums[k - 1])
+                        k--;
+                    k--;
+                }
+            }
+            while (i < length - 4 && nums[i] == nums[i + 1]) /* -4 bcz we are doing i = i +1 in next step also ( so it will be i = 2 inside the while) so next step i = 3  so it will be lft with 2 more place for j and k*/
+                i++;
+            if (i < length - 4) {
+                i = i + 1;/*just next to duplicate*/
+                j = i + 1;
+                k = length - 1;
+            } else
+                return result;
+        }
+        return result;
     }
 
     /*Approach 1:
