@@ -94,9 +94,9 @@ public class ContainerWithMostWater {
             int minHeight = Math.min(height[i], height[j]);
             int area = (j - i) * minHeight;
             maxArea = Math.max(maxArea, area);
-            while (i < j && height[i] <= minHeight)
+            while (i < j && height[i] <= minHeight) /*if the boundary has more height it will have the more width and if the subset or the inner stick has less height we will get less entry for sure so skip that */
                 i++;
-            while (i < j && height[j] <= minHeight)
+            while (i < j && height[j] <= minHeight)/*doing the same for the if height is less for next elements just skip them and move on as are will come less inside it*/
                 j--;
         }
         return maxArea;
