@@ -18,6 +18,9 @@ public class BestTimeToBuyAndSellStocks {
         Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.
      */
 
+    /*
+     * NOTE HERE WE HAVEN'T USED THE SLIDING WINDOW TECHNIQUE TO SOLVE THE PROBLEM
+     * */
     public static void main(String[] args) {
         int[] prices = {3, 2, 6, 8, 1, 6};//{7, 1, 5, 3, 6, 4};
         log.info("The max profit from viaBrutForce is {}", maxProfitViaBrutForce(prices));
