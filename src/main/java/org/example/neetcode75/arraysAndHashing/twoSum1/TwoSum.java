@@ -1,4 +1,4 @@
-package org.example.neetcode75.arraysAndHashing.twoSum;
+package org.example.neetcode75.arraysAndHashing.twoSum1;
 
 import lombok.extern.slf4j.Slf4j;
 
