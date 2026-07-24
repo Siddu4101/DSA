@@ -82,6 +82,10 @@ It does not matter what you leave beyond the returned k (hence they are undersco
     /*
      * Approach : 02
      * via set
+     * 1. start from 0th index as unique index id
+     * 2. add elements to the set if it added it means it's unique one
+     * 3. update the element in the unique index position
+     * 4. return the unique index as a k count
      * */
     static int removeDuplicatesInPlaceViaSet(int[] nums) {
         Set<Integer> integers = new HashSet<>();
