@@ -5,3 +5,4 @@ sl no,problem,pattern,one liner
 ,,HashSet, create a empty hashset and set unique index = 0 while looping on input to add it to the set if element added replace the input[unique] = element and increment the unique at the end u will have ur result
 3,https://leetcode.com/problems/move-zeroes/description/,Two pointer,keep nonZeroElementIndex which start at 0 and also a iterator which goes through all elements when iterator find any non zero element swap that with nonZeroElementIndex and move the index by 1 and continue
 ,,Two pointer,here we have 2 pointer 1 for zero index and another for non-zeo index if u find any place that non zero element at nonZeroIndex and move by 1
+4,https://leetcode.com/problems/container-with-most-water/description/,Two pointer, left = 0 right = len - 1 while left < right find area if area > maxArea replace it, move the pointer from that side which has less in height
