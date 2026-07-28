@@ -1,0 +1,7 @@
+sl no,problem,pattern,one liner
+1,https://leetcode.com/problems/two-sum/description/,Two pointer, start and end 2 pointer if sum of these = return index if sum > target move end to left else start to right
+,,Hash map,keep the value
+2,https://leetcode.com/problems/remove-duplicates-from-sorted-array/description/,Two pointer, start = 0 next = start + 1 if element at  start == next element move next until it is different and once it is different move next element to start + 1 position and continue until next < len
+,,HashSet, create a empty hashset and set unique index = 0 while looping on input to add it to the set if element added replace the input[unique] = element and increment the unique at the end u will have ur result
+3,https://leetcode.com/problems/move-zeroes/description/,Two pointer,keep nonZeroElementIndex which start at 0 and also a iterator which goes through all elements when iterator find any non zero element swap that with nonZeroElementIndex and move the index by 1 and continue
+,,Two pointer,here we have 2 pointer 1 for zero index and another for non-zeo index if u find any place that non zero element at nonZeroIndex and move by 1

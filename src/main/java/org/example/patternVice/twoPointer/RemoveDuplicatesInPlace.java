@@ -40,10 +40,10 @@ It does not matter what you leave beyond the returned k (hence they are undersco
      * */
     public static void main(String[] args) {
         int nums[] =
-                {1, 1, 2};
-        //                {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
-        log.info("The k value is {} via Two Pointers", removeDuplicatesInPlaceTwoPointer(nums));
-        log.info("The k value is {} via HashSet", removeDuplicatesInPlaceViaSet(nums));
+                //                {1, 1, 2};
+                {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
+        log.info("The k value is {} via Two Pointers", removeDuplicatesInPlaceTwoPointer(nums.clone()));
+        log.info("The k value is {} via HashSet", removeDuplicatesInPlaceViaSet(nums.clone()));
     }
 
     /*
@@ -65,11 +65,12 @@ It does not matter what you leave beyond the returned k (hence they are undersco
         int next = 1;
 
         while (next < nums.length) {
-            if (nums[next] != nums[start]) {
+            if (nums[start] == nums[next]) {
+                next++;
+            } else {
                 start++;
                 nums[start] = nums[next];
             }
-            next++;
         }
 
         log.info("Elements after shift {} via two pointer", Arrays.toString(nums));
