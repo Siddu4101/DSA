@@ -29,8 +29,9 @@ Output: []
 Explanation: The only possible triplet does not sum up to 0.
     * */
     public static void main(String[] args) {
-        int[] nums = {-1, 0, 1, 2, -1, -4};
-        log.info("The pairs are {}", threeSum(nums));
+        int[] nums = {0, 0, 0, 0};//{-1, 0, 1, 2, -1, -4};
+        log.info("The pairs are {}", threeSum(nums.clone()));
+        log.info("The pairs are with optimization {}", threeSumOptimized(nums.clone()));
     }
 
 
@@ -44,9 +45,9 @@ Explanation: The only possible triplet does not sum up to 0.
     public static List<List<Integer>> threeSum(int[] nums) {
         Set<List<Integer>> res = new HashSet<>();
         int j, k, sum;
+        Arrays.sort(nums);
 
         for (int i = 0; i < nums.length - 2; i++) {
-            Arrays.sort(nums);
             j = i + 1;
             k = nums.length - 1;
 
@@ -59,6 +60,52 @@ Explanation: The only possible triplet does not sum up to 0.
                 else {
                     res.add(List.of(nums[i], nums[j], nums[k]));
                     j++;
+                }
+            }
+        }
+        return res.stream().toList();
+    }
+
+    /*
+     * Approach: 02
+     * Two pointer,optimized way:
+     *  inside  for check if the i > 0 and i and i-1 element same just skip that iteration,
+     *  as we had that pair already, when sum = 0 and moving j and k check j and j+1 are equal if yes move till they are not same and j < len-1,
+     *  and k > j and k , k-1 are equal move till no equal
+     * */
+
+    /*
+     * T: O(n2)
+     * S: O(
+     * */
+
+    public static List<List<Integer>> threeSumOptimized(int[] nums) {
+
+        Set<List<Integer>> res = new HashSet<>();
+        int j, k, sum;
+        Arrays.sort(nums);
+
+        for (int i = 0; i < nums.length - 2; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) /*skip those entries which are same*/
+                continue;
+            j = i + 1;
+            k = nums.length - 1;
+
+            while (j < k) {
+                sum = nums[i] + nums[j] + nums[k];
+                if (sum > 0)
+                    k--;
+                else if (sum < 0)
+                    j++;
+                else {
+                    res.add(List.of(nums[i], nums[j], nums[k]));
+
+                    while (j < nums.length - 1 && nums[j] == nums[j + 1])/*move j till it finds next non similar val*/
+                        j++;
+                    j++;
+                    while (k > j && nums[k] == nums[k - 1]) /*same as j*/
+                        k--;
+                    k--;
                 }
             }
         }
