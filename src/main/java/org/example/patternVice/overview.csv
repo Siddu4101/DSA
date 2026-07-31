@@ -6,3 +6,4 @@ sl no,problem,pattern,one liner
 3,https://leetcode.com/problems/move-zeroes/description/,Two pointer,keep nonZeroElementIndex which start at 0 and also a iterator which goes through all elements when iterator find any non zero element swap that with nonZeroElementIndex and move the index by 1 and continue
 ,,Two pointer,here we have 2 pointer 1 for zero index and another for non-zeo index if u find any place that non zero element at nonZeroIndex and move by 1
 4,https://leetcode.com/problems/container-with-most-water/description/,Two pointer, left = 0 right = len - 1 while left < right find area if area > maxArea replace it, move the pointer from that side which has less in height
+5,https://leetcode.com/problems/3sum/,Two pointer, sort the array, keep a iterator for 0 to len-2 as we need 3 num to get 0 sum, for given iterator i find possible j and k if duplicate where sum = 0 discard via set if sum = 0 u can move either j++ or k--
