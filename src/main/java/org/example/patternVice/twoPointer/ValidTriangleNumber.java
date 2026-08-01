@@ -37,6 +37,11 @@ Output: 4
      * 4. if b + c > a then take all the pairs between c and b as next elements of c is already  greater than c and these are wrt b so after this decrement b
      * 5. if b + c <= a then increment c to get the valid pair
      * */
+
+    /*
+     * T: O(n2)
+     * S: O(1)
+     * */
     public static int triangleNumber(int[] nums) {
         Arrays.sort(nums);
         int b, c, count = 0;
