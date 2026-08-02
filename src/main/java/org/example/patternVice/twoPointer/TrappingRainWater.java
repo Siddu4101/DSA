@@ -32,7 +32,11 @@ Output: 9
      * Approach: 01
      * 1. cal the prefixMax and suffixMax for each location
      * 2. for each poistion check the possible water can trap = min(leftMax, rightMax) - height[position] if (height[position] > min(leftMax,rightMax)) add it to total water trapped
-     *
+     * */
+
+    /*
+     * T: O(n)
+     * S: O(2*n) => O(n)
      * */
     public static int trap(int[] height) {
         int[] leftMax = new int[height.length];
@@ -67,6 +71,12 @@ Output: 9
      * 1. set 2 pointer left = 0 right = len -1 and 2 max pointer leftMax = startHeight rightMax = endHeight
      * 2. if height of the max of the left or right is less move that pointer
      * 3. cal the max height at that location by it's height and and the maxPointer at that side and subtract by height of it to cal the water aat that position
+     * */
+
+    /*
+     * T: O(n)
+     * S: O(1)
+     *
      * */
     public static int trapWithTwoPointer(int[] height) {
         int left = 0;
