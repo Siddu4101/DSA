@@ -1,4 +1,6 @@
 sl no,problem,pattern,one liner
+,,,,
+TWO POINTERS
 1,https://leetcode.com/problems/two-sum/description/,Two pointer, start and end 2 pointer if sum of these = return index if sum > target move end to left else start to right
 ,,Hash map,keep the value
 2,https://leetcode.com/problems/remove-duplicates-from-sorted-array/description/,Two pointer, start = 0 next = start + 1 if element at  start == next element move next until it is different and once it is different move next element to start + 1 position and continue until next < len
@@ -13,3 +15,8 @@ sl no,problem,pattern,one liner
 ,,Two pointer,"Similar to move zero's use the same login call it twice first time to move all 0's to front and next time all 1's to after 0's index and for 2's it is already done as we have only 0,1,2 as input",,,
 8,https://leetcode.com/problems/trapping-rain-water/,Prefix Suffix Max, cal the prefix and suffix max for each location then for each position find the water level if it > height[position] add it (Math.min(leftMax[i], rightMax[i])) - height[i])
 ,,Two pointer, set left = 0 right = len - 1 and leftMax = height[left] rightMax=height[right] now check if leftMax < rightMax move left++ and find max(height[left], leftMax) - height[left] else right++ max(height[right], rightMax) - height[i] add this value to total
+,,,,
+SLIDING WIINDOW
+9,https://www.hellointerview.com/learn/code/sliding-window/maximum-sum-of-subarrays-of-size-k,Sliding window, start from 0 till len - k + 1 cal the sum of k elements if it > maxSum replace it
+,,Sliding window,optimized instead of cal the sum for each iteration cal the sum of k elements at once and subtract the element which is moving out of the window and add the one getting included and do the compare with maxSum
+10,https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards/description/,Sliding window, cal right subwindow sum, if len = k return it else start removing 1 element from the sum from right window start and add a new element from the left element and cal the sum if it is max replace the max
