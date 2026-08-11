@@ -1,4 +1,4 @@
-package org.example.patternVice.slidingWindow;
+package org.example.patternVice.slidingWindow.fixedWindow;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,6 +36,11 @@ Explanation: Regardless of which two cards you take, your score will always be 4
      * 2. if len = k that is the max sum return it
      * 3. now start i= start of right subWindow j = start of the array
      * 4. remove the ith element and add the jth element to move the window till i reaches the end if u find any sum max in this window mark it max
+     * */
+
+    /*
+     * T: O(n)
+     * S: O(1)
      * */
     private static int maxPointsFromCard(int[] cardPoints, int k) {
         int length = cardPoints.length;

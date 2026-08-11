@@ -1,4 +1,4 @@
-package org.example.patternVice.slidingWindow;
+package org.example.patternVice.slidingWindow.fixedWindow;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -50,6 +50,11 @@ We return 0 because no subarrays meet the conditions.
      * 3. now remove the start element and reduce the count of it from the map if the count = 0 remove it from the map and move the start to find sum of next window
      * */
 
+    /*
+     * T: O(n)
+     * S: O(1) --> k element map
+     * */
+
     public static long maximumSubarraySumViaFreMap(int[] nums, int k) {
         int start = 0;
         long sum = 0;
@@ -83,6 +88,11 @@ We return 0 because no subarrays meet the conditions.
      * 3. if element not present just add it to the window and sum
      * 4. if window has k elements update the maxSum
      * 5. else if window has k + 1 elements remove left most from window and sum and update the maxSum
+     * */
+
+    /*
+     * T: O(n)
+     * S: O(1) --> k +1 elements set
      * */
     public static long maximumSubarraySumViaSet(int[] nums, int k) {
         int length = nums.length;
