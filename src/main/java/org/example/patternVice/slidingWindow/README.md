@@ -1,92 +1,88 @@
 # 🪟 Sliding Window Pattern
 
-## 📝 Overview
+# 🪟 Sliding Window Patterns
 
-The sliding window technique is a two-pointer approach that efficiently processes contiguous subarrays or substrings by
-maintaining a "window" of elements and sliding it across the data.
+Three common patterns to recognize in array/string problems:
 
-**Key Idea:** Instead of recalculating from scratch for each position, maintain a running calculation and update it
-incrementally.
+## 1️⃣ Fixed-Length Window
 
----
+**Window size = `k`**
 
-## 🎯 Problem: Maximum Sum of Subarray with K Elements
+Use when the problem asks about **every contiguous subarray/substring of exactly `k` elements**.
 
-### 📌 Description
+**Examples:**
 
-Given an array of integers and an integer `k`, find the maximum sum of any contiguous subarray of size `k`.
+* Maximum sum of `k` elements
+* Average of every `k` elements
+* Maximum/minimum in a window
 
-### 📊 Example
-
-```
-Input:  nums = [2, 1, 5, 1, 3, 2], k = 3
-Output: 9  (subarray [5, 1, 3])
-
-Input:  nums = [4, 2, 4, 5, 6], k = 4
-Output: 19 (subarray [4, 5, 6, 4] or similar)
+```text
+[1 2 3] 4 5
+  [2 3 4] 5
+    [3 4 5]
 ```
 
----
-
-## 🔍 Approaches
-
-### ❌ Approach 1: Brute Force
-
-**Algorithm:**
-
-1. Iterate through each possible starting position
-2. For each position, calculate sum of k consecutive elements
-3. Track maximum sum
-
-**Complexity:**
-
-- ⏱️ Time: **O(n × k)** - Recalculates sum for each window
-- 💾 Space: **O(1)**
-
-**Why it's slow:** Redundant recalculation of overlapping elements
+⏱️ Usually **O(n)** instead of O(n × k).
 
 ---
 
-### ✅ Approach 2: Optimized Sliding Window
+## 2️⃣ Fixed-Length + Distinct Element Count
 
-**Algorithm:**
+**Window size = `k` + track unique elements**
 
-1. Calculate sum of first k elements
-2. Slide the window by 1 position:
-    - Subtract the leftmost element (leaving the window)
-    - Add the new rightmost element (entering the window)
-3. Update maximum sum as you slide
+Use when the problem asks for **exactly `k` elements with a condition on distinct/unique elements**.
 
-**Complexity:**
+**Examples:**
 
-- ⏱️ Time: **O(n)** - Single pass with constant operations
-- 💾 Space: **O(1)**
+* Count subarrays of size `k` having exactly `x` distinct elements
+* Maximum sum among windows of size `k` containing distinct elements
 
-**Why it's better:** Only 2 operations per slide instead of recalculating k sums
+Typical data structure:
 
----
-
-## 📈 Visual Example
-
-```
-Array: [4, 2, 4, 5, 6], k = 4
-
-Window 1: [4, 2, 4, 5] → sum = 15
-          ^ Remove this
-
-Window 2:    [2, 4, 5, 6] → sum = 15 - 4 + 6 = 17
-             ^ Add this
-
-Max Sum: 17
+```java
+Map<Integer, Integer> freq = new HashMap<>();
 ```
 
+💡 Add incoming element → remove outgoing element → maintain distinct count.
+
+⏱️ **O(n)** average.
+
 ---
 
-## 💡 When to Use
+## 3️⃣ Dynamic-Length Sliding Window
 
-- Maximum/minimum sum of subarray of fixed size
-- Longest substring with conditions
-- Average of subarrays of size k
-- Number of unique elements in window
-- Any problem involving contiguous elements with fixed or variable window size
+**Window size changes dynamically**
 
+Use when you need the **longest/shortest contiguous subarray/substring satisfying a condition**.
+
+**Examples:**
+
+* Longest substring without repeating characters
+* Smallest subarray with sum ≥ `k`
+* Longest subarray with at most `k` distinct elements
+
+```text
+left → [ valid window ........ ] ← right
+         ↓ condition breaks
+         move left →
+```
+
+💡 Expand `right` → if condition breaks, move `left` until valid again.
+
+⏱️ Usually **O(n)** because both pointers move forward.
+
+---
+
+## 🧠 Quick Recognition
+
+| Pattern                 | When to Use                                         |
+|-------------------------|-----------------------------------------------------|
+| 🔒 **Fixed Length**     | Window is explicitly `k`                            |
+| 🔒 **Fixed + Distinct** | Window is `k` + unique/count condition              |
+| 🔄 **Dynamic Length**   | Find longest/shortest window satisfying a condition |
+
+### ⭐ Rule of Thumb
+
+> **`k` given → Fixed Window**
+> **`k` + distinct → Fixed Window + Frequency Map**
+> **Longest/Shortest + condition → Dynamic Window**
