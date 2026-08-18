@@ -29,3 +29,6 @@ DYNAMIC
 13,https://leetcode.com/problems/longest-substring-without-repeating-characters/,Dynamic sliding window,set start=0 maxLength=0 and a char freq map; for each char add it to the map incrementing its count; if any char freq > 1 shrink window from start: decrement start char count and remove from map if count=0 then move start++ repeat till no duplicate; update maxLength = max(maxLength i - start + 1)
 ,,Dynamic sliding window optimized,instead of freq map store char->index map; for each char if it already exists in map jump start = max(start, map.get(char) + 1) to skip past the duplicate in one shot; update map with current index; update maxLength = max(maxLength, i - start + 1)
 14,https://leetcode.com/problems/longest-repeating-character-replacement/description/,Dynamic sliding window,set start=0 maxFreq=0 and char freq map; for each end add current char and update maxFreq; if windowSize - maxFreq > k (because we can replace at most k elements) shrink once from start by decrementing/removing its freq and move start++; update maxLength = max(maxLength, end - start + 1)
+,,,,
+INTERVAL
+15,https://www.hellointerview.com/learn/code/intervals/can-attend-meetings,Intervals,sort by start time; if currentStart < previousEnd overlap => false, else true
