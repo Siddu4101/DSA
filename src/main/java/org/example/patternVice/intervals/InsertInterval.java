@@ -4,9 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Slf4j
 public class InsertInterval {
@@ -30,64 +27,52 @@ Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
      * */
     public static void main(String[] args) {
         int[][] intervals =
-                {{1, 5}};
-        //                {{1, 3}, {6, 9}};
-        //                {{1, 2}, {3, 5}, {6, 7}, {8, 10}, {12, 16}};
+                //                {{1, 5}};
+                //                {{1, 3}, {6, 9}};
+                {{1, 2}, {3, 5}, {6, 7}, {8, 10}, {12, 16}};
         int[] newInterval =
-                {6, 8};
-        //                {2, 5};
-        //                {4, 8};
+                //                {6, 8};
+                //                {2, 5};
+                {4, 8};
         log.info("The updated array is {}", Arrays.deepToString(insert(intervals, newInterval)));
     }
 
+    /*
+     * Approach:
+     * 1. separate problem in 3 parts left non-overlapping based on right-bound < insert-left-bound
+     * 2. for middle merge part check left-bound started before pr at insert-right-bound then merge them and insert
+     * 3. for right non-overlapping just add them like step 1
+     * */
+
+    /*
+     * T: O(n)
+     * S: O(n)
+     * */
 
     public static int[][] insert(int[][] intervals, int[] newInterval) {
-        //        if (intervals.length == 0)
-        //            return new int[][]{newInterval};
-        //
-        if (intervals[intervals.length - 1][1] < newInterval[0]) {
-            List<int[]> list = Arrays.stream(intervals).collect(Collectors.toList());
-            list.add(newInterval);
-            return list.toArray(new int[][]{});
-        }
-
         ArrayList<int[]> result = new ArrayList<>();
-        //        int i = 0;
-        //        int j = i + 1;
-        //        while (j <= intervals.length) {
-        //            if (intervals[i][1] < newInterval[0] && intervals[j][0] > newInterval[1]) {
-        //                result.add(j, newInterval);
-        //            } else
-        //            if (intervals[i][1] >= newInterval[0]) {
-        //                intervals[i][1] = Math.max(newInterval[1], intervals[i][1]);
-        //                while (j < intervals.length && intervals[i][1] >= intervals[j][0]) {
-        //                    intervals[i][1] = Math.max(intervals[j][1], intervals[i][1]);
-        //                    j++;
-        //                }
-        //                result.add(intervals[i]);
-        //                i = j - 1;
-        //            } else {
-        //                result.add(intervals[i]);
-        //            }
-        //            j++;
-        //            i++;
-        //        }
+        int i = 0;
+        int length = intervals.length;
 
-        for (int i = 0; i < intervals.length; i++) {
-            if (newInterval[1] >= intervals[i][0] && newInterval[0] <= intervals[i][1]) {
-                int tempI = i;
-                while (tempI < intervals.length && newInterval[1] >= intervals[tempI][0]) {
-                    newInterval[0] = Math.min(newInterval[0], intervals[tempI][0]);
-                    newInterval[1] = Math.max(newInterval[1], intervals[tempI][1]);
-                    tempI++;
-                }
-                result.add(newInterval);
-                i = tempI - 1;
-            } else {
-                result.add(intervals[i]);
-            }
+        /*left non-overlapping elements*/
+        while (i < length && intervals[i][1] < newInterval[0]) {
+            result.add(intervals[i]);
+            i++;
         }
 
+        /*for overlapping interval merge the records and add*/
+        while (i < length && intervals[i][0] <= newInterval[1]) {
+            newInterval[0] = Math.min(newInterval[0], intervals[i][0]);
+            newInterval[1] = Math.max(newInterval[1], intervals[i][1]);
+            i++;
+        }
+        result.add(newInterval);
+
+        /*for right non-overlapping records just add them*/
+        while (i < length) {
+            result.add(intervals[i]);
+            i++;
+        }
 
         return result.toArray(new int[][]{});
     }
