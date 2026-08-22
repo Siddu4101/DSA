@@ -33,3 +33,4 @@ DYNAMIC
 INTERVAL
 15,https://www.hellointerview.com/learn/code/intervals/can-attend-meetings,Intervals,sort by start time; if currentStart < previousEnd overlap => false, else true
 16,https://leetcode.com/problems/insert-interval/description/,Intervals,3-part: add left non-overlap (end<newStart); merge overlap (start<=newEnd); add right;
+17,https://leetcode.com/problems/non-overlapping-intervals/,Intervals,sort by end time to greedily keep meetings that finish earliest; if previousEnd > currentStart => overlap (remove it); else update previousEnd to current to move next;
