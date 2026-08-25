@@ -61,14 +61,12 @@ If we had started at the first tree, we would only pick from trees [1,2].
         for (int i = 0; i < fruits.length; i++) {
             fruitsTypeFrequency.put(fruits[i], fruitsTypeFrequency.getOrDefault(fruits[i], 0) + 1); /* each fruit freq*/
 
-            if (fruitsTypeFrequency.size() > 2) { /* if > 2 kinds of fruit present*/
-                while (fruitsTypeFrequency.size() > 2) { /* remove fruits from start till we have 2 kinds*/
-                    fruitsTypeFrequency.put(fruits[start], fruitsTypeFrequency.get(fruits[start]) - 1);
-                    if (fruitsTypeFrequency.get(fruits[start]) == 0) /*if fruit count = 0 remove from the map*/
-                        fruitsTypeFrequency.remove(fruits[start]);
+            while (fruitsTypeFrequency.size() > 2) { /* remove fruits from start till we have 2 kinds*/
+                fruitsTypeFrequency.put(fruits[start], fruitsTypeFrequency.get(fruits[start]) - 1);
+                if (fruitsTypeFrequency.get(fruits[start]) == 0) /*if fruit count = 0 remove from the map*/
+                    fruitsTypeFrequency.remove(fruits[start]);
 
-                    start++; /* to be in sync with start elements which have removed*/
-                }
+                start++; /* to be in sync with start elements which have removed*/
             }
 
             maxFruits = Math.max(maxFruits, i - start + 1);/* update the max fruits*/
