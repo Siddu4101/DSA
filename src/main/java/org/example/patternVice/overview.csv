@@ -36,3 +36,9 @@ INTERVAL
 17,https://leetcode.com/problems/non-overlapping-intervals/,Intervals,sort by end time to greedily keep meetings that finish earliest; if previousEnd > currentStart => overlap (remove it); else update previousEnd to current to move next;
 18,https://leetcode.com/problems/merge-intervals/description/,Intervals,"Sort by start, merge while current start <= last merged end, else append new interval."
 19,https://www.hellointerview.com/learn/code/intervals/employee-free-time,Intervals,"Flatten all employees' intervals as we interested in free time, sort by start time merge overlapping schedules; and return gaps between merged intervals as common free time."
+,,,,
+STACK
+20,https://leetcode.com/problems/valid-parentheses/,Stack,"odd length => false; push opening bracket; on closing, stack must be non-empty and closing must match popped opening via map; end with empty stack"
+,,Stack (optimized),"push expected closing bracket for each opening; on closing, stack must be non-empty and equal to stack.pop(); end with empty stack"
+21,https://leetcode.com/problems/decode-string/description/,Stack,"single stack of strings: on ']' pop till '[' to build segment, pop repeat-count digits, repeat segment k times, push back; if it is any other char just push; at the end pop all the stack and concat and return"
+,,Stack (optimized),"countStack + strStack + current builder: parse multi-digit k, on '[' push k and previous string, on ']' pop/append repeated current to previous; return the current string "
