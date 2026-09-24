@@ -15,3 +15,15 @@ Some of the source
 4. https://www.risingbrain.org/sheet
 5. https://www.udemy.com/course/dynamic-programming-algorithms-coding-interview-questions/?srsltid=AfmBOoqT8HkpjGFewHb-Tvt1XL5lvnm4ArGo6osl9dU0olelSYDe7-0d&couponCode=25BBPMXNVD35
 6. https://www.youtube.com/playlist?list=PLDN4rrl48XKpZkf03iYFl-O29szjTrs_O
+
+## patternwise
+
+### youtube:
+
+-
+
+topics: https://chocolate-candy-c79.notion.site/DSA-Topics-Patterns-and-LeetCode-Questions-3d2d8c33330f80dc9623f6b1dce29e03
+
+- list: https://chocolate-candy-c79.notion.site/12-Week-DSA-Checklist-3d2d8c33330f802abc3fc8495ac265de
+
+![topics](./topics.png) 
